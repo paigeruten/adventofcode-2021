@@ -6,38 +6,40 @@ function table.inspect(t, level)
   level = level or 0
   local indent = string.rep("  ", level)
 
-  local s = ""
-  if level == 0 then s = s .. indent .. "{\n" end
+  local buf = {}
+  if level == 0 then buf[#buf+1] = indent .. "{\n" end
 
   for k, v in pairs(t) do
-    s = s .. indent .. "  "
+    buf[#buf+1] = indent .. "  "
 
     if type(k) == "string" and string.match(k, "%s") then
-      s = s .. string.format("[%q]", k)
+      buf[#buf+1] = string.format("[%q]", k)
     elseif type(k) == "string" then
-      s = s .. k
+      buf[#buf+1] = k
     else
-      s = s .. "[" .. tostring(k) .. "]"
+      buf[#buf+1] = "[" .. tostring(k) .. "]"
     end
 
-    s = s .. " = "
+    buf[#buf+1] = " = "
 
     if type(v) == "table" and table.empty(v) then
-      s = s .. "{}"
+      buf[#buf+1] = "{}"
     elseif type(v) == "table" then
-      s = s .. "{\n" .. table.inspect(v, level + 1) .. indent .. "  }"
+      buf[#buf+1] = "{\n"
+      buf[#buf+1] = table.inspect(v, level + 1)
+      buf[#buf+1] = indent .. "  }"
     elseif type(v) == "string" then
-      s = s .. string.format("%q", v)
+      buf[#buf+1] = string.format("%q", v)
     else
-      s = s .. tostring(v)
+      buf[#buf+1] = tostring(v)
     end
 
-    s = s .. "\n"
+    buf[#buf+1] = "\n"
   end
 
-  if level == 0 then s = s .. indent .. "}\n" end
+  if level == 0 then buf[#buf+1] = indent .. "}\n" end
 
-  return s
+  return table.concat(buf)
 end
 
 function table.print(t)
