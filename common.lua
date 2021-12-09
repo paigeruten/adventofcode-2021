@@ -58,3 +58,55 @@ function table.partition(t, predicate)
   end
   return yeses, nos
 end
+
+function string.tsplit(str, pattern)
+  if str == "" then return {} end
+
+  pattern = pattern or "%s+"
+
+  if pattern == "" then
+    local parts = {}
+    for char in string.gmatch(str, ".") do
+      table.insert(parts, char)
+    end
+    return parts
+  end
+
+  local parts = {}
+  local index = 1
+  while true do
+    if index > #str then
+      table.insert(parts, "")
+      break
+    end
+
+    local i, j = string.find(str, pattern, index)
+
+    if not i then
+      table.insert(parts, string.sub(str, index))
+      break
+    end
+
+    if i == index then
+      table.insert(parts, "")
+    else
+      table.insert(parts, string.sub(str, index, i - 1))
+    end
+
+    index = j + 1
+  end
+
+  return parts
+end
+
+function string.split(str, pattern)
+  return table.unpack(string.tsplit(str, pattern))
+end
+
+function string.scan(str, pattern)
+  local matches = {}
+  for match in string.gmatch(str, pattern) do
+    table.insert(matches, match)
+  end
+  return matches
+end
