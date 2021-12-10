@@ -19,6 +19,13 @@ return {
     assert(table_equals({1, 3, 5}, odds))
   end,
 
+  table_map = function()
+    assert(table_equals(
+      {1, 4, 9, 16},
+      table.map({1, 2, 3, 4}, function(x) return x * x end)
+    ))
+  end,
+
   string_tsplit = function()
     assert(table_equals({"a", "b", "c"}, string.tsplit("a,b,c", ",")))
     assert(table_equals({"", "a", "", "b", "", "c", ""}, string.tsplit(",a,,b,,c,", ",")))

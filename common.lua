@@ -59,6 +59,14 @@ function table.partition(t, predicate)
   return yeses, nos
 end
 
+function table.map(t, fn)
+  local results = {}
+  for k, v in pairs(t) do
+    results[k] = fn(v)
+  end
+  return results
+end
+
 function string.tsplit(str, pattern)
   if str == "" then return {} end
 
