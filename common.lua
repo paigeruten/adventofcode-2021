@@ -118,3 +118,16 @@ function string.scan(str, pattern)
   end
   return matches
 end
+
+function string.chars(str)
+  local state = { index = 1 }
+  local function iterator(state)
+    if state.index <= #str then
+      state.index = state.index + 1
+      return string.sub(str, state.index - 1, state.index - 1)
+    end
+    return nil
+  end
+
+  return iterator, state
+end

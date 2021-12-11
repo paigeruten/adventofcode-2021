@@ -40,4 +40,13 @@ return {
     assert(table_equals({"how", "are", "you"}, string.scan("how are you?", "%w+")))
     assert(table_equals({}, string.scan("asdf", "%d")))
   end,
+
+  string_chars = function()
+    local chars = ""
+    for char in string.chars("asdf") do
+      chars = chars .. char
+    end
+
+    assert(equals("asdf", chars))
+  end,
 }
