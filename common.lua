@@ -2,6 +2,10 @@ function table.empty(t)
   return next(t) == nil
 end
 
+function table.clone(t)
+  return {table.unpack(t)}
+end
+
 function table.inspect(t, level)
   level = level or 0
   local indent = string.rep("  ", level)
@@ -57,6 +61,13 @@ function table.partition(t, predicate)
     end
   end
   return yeses, nos
+end
+
+function table.includes(t, x)
+  for _, value in pairs(t) do
+    if value == x then return true end
+  end
+  return false
 end
 
 function table.map(t, fn)
