@@ -131,3 +131,21 @@ function string.chars(str)
 
   return iterator, state
 end
+
+Vector = {}
+Vector.__index = Vector
+
+function Vector:new(x, y)
+  local vector = { x = x, y = y }
+  setmetatable(vector, self)
+  return vector
+end
+
+function Vector:to_key()
+  return self.x .. "," .. self.y
+end
+
+function Vector.__add(a, b)
+  return Vector:new(a.x + b.x, a.y + b.y)
+end
+
