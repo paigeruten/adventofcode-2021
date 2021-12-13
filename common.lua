@@ -156,6 +156,15 @@ function Vector:to_key()
   return self.x .. "," .. self.y
 end
 
+function Vector:from_key(key)
+  local x, y = string.match(key, "^(%d+),(%d+)$")
+  if x then
+    return Vector:new(tonumber(x), tonumber(y))
+  else
+    return nil
+  end
+end
+
 function Vector.__add(a, b)
   return Vector:new(a.x + b.x, a.y + b.y)
 end
