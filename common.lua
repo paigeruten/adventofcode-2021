@@ -78,6 +78,14 @@ function table.map(t, fn)
   return results
 end
 
+function table.reduce(t, fn, init)
+  local acc = init
+  for _, v in pairs(t) do
+    acc = fn(acc, v)
+  end
+  return acc
+end
+
 function string.tsplit(str, pattern)
   if str == "" then return {} end
 
@@ -141,6 +149,20 @@ function string.chars(str)
   end
 
   return iterator, state
+end
+
+function string.join(t, sep)
+  if not sep then return table.concat(t) end
+
+  local table_with_seps = {}
+  for i, v in ipairs(t) do
+    table.insert(table_with_seps, v)
+    if i ~= #t then
+      table.insert(table_with_seps, sep)
+    end
+  end
+
+  return table.concat(table_with_seps)
 end
 
 Vector = {}

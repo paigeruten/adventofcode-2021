@@ -26,6 +26,13 @@ return {
     ))
   end,
 
+  table_reduce = function()
+    assert(equals(
+      24,
+      table.reduce({1, 2, 3, 4}, function(a, b) return a * b end, 1)
+    ))
+  end,
+
   string_tsplit = function()
     assert(table_equals({"a", "b", "c"}, string.tsplit("a,b,c", ",")))
     assert(table_equals({"", "a", "", "b", "", "c", ""}, string.tsplit(",a,,b,,c,", ",")))
@@ -48,5 +55,12 @@ return {
     end
 
     assert(equals("asdf", chars))
+  end,
+
+  string_join = function()
+    assert(equals("asdf,qwerty,uiop", string.join({"asdf", "qwerty", "uiop"}, ",")))
+    assert(equals("asdf", string.join({"asdf"}, ",")))
+    assert(equals("abc", string.join({"a", "b", "c"})))
+    assert(equals("", string.join({})))
   end,
 }
