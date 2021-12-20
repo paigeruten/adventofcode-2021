@@ -78,6 +78,22 @@ function table.map(t, fn)
   return results
 end
 
+function table.keys(t)
+  local results = {}
+  for key in pairs(t) do
+    table.insert(results, key)
+  end
+  return results
+end
+
+function table.values(t)
+  local results = {}
+  for _, value in pairs(t) do
+    table.insert(results, value)
+  end
+  return results
+end
+
 function table.reduce(t, fn, init)
   local acc = init
   for _, v in pairs(t) do
@@ -179,7 +195,7 @@ function Vector:to_key()
 end
 
 function Vector:from_key(key)
-  local x, y = string.match(key, "^(%d+),(%d+)$")
+  local x, y = string.match(key, "^(%-?%d+),(%-?%d+)$")
   if x then
     return Vector:new(tonumber(x), tonumber(y))
   else
